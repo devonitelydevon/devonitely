@@ -2,12 +2,58 @@
 <html>
 	<head>
 		<title>Devonitely</title>
+		<meta charset="utf-8">
+	    <meta property="og:title" content="Smaber up for 2018" />
+	    <meta property="og:image" content="res/devonitelypic.jpeg" />
+		<style>
+			p {
+			  text-align: center;
+			  font-size: 60px;
+			  margin-top:0px;
+		</style>
 	</head>
 	<body>
+		<p id="timer">00:00:00:00</p>
 
-		<h1>Countdown to Devon!</h1>
+		<script>
+			var reunionDate;
+			updateTime();
 
-		<p>Time: 00:00:00:00</p>
+			function updateTime()
+			{
+				if (!reunionDate)
+				{
+					reunionDate = getReunionDate()
+				}
+
+				var diffMs = Math.abs(reunionDate - new Date())
+
+				var days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+				var hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+				var minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+				var seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+				document.getElementById("timer").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s"
+
+				setTimeout(updateTime, 1000)
+			}
+
+			function getReunionDate()
+			{
+				var utc = new Date()
+				utc.setUTCFullYear(2018)
+				utc.setUTCMonth(6)
+				utc.setUTCDate(4)
+				utc.setUTCHours(1)
+				utc.setUTCMinutes(0)
+				utc.setUTCSeconds(0)
+				utc.setUTCMilliseconds(0)
+
+				return utc
+				// 7/3/18 6:00 PM
+				// utc 7/4/18 1:00 AM
+			}
+		</script>
 
 	</body>
 </html>
