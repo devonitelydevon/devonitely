@@ -91,10 +91,10 @@
 					geocoder = new google.maps.Geocoder()
 				}
 
-				// var lat = position.coords.latitude
-				// var lon = position.coords.longitude
-				var lat = 47.6306283
-				var lon = -122.1612227
+				var lat = position.coords.latitude
+				var lon = position.coords.longitude
+				// var lat = 47.6306283
+				// var lon = -122.1612227
 
 				var latlng = new google.maps.LatLng(lat, lon)
 				geocoder.geocode({'location': latlng}, function(results, status) {
