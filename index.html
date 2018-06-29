@@ -29,6 +29,7 @@
 			var geocoder;
 			var city;
 			var state;
+			var locationUpdated = false;
 			updateTime();
 
 			function updateTime()
@@ -50,7 +51,12 @@
 				if (minutes % 5 == 0 || !city || !state)
 				{
 					getLocation()
+					locationUpdated = true
 					// prettiestGirl(null)
+				}
+				else
+				{
+					locationUpdated = false
 				}
 
 				setTimeout(updateTime, 1000)
