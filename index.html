@@ -5,7 +5,7 @@
 		<meta charset="utf-8">
 	    <meta property="og:title" content="Countdown to Dev!" />
 	    <meta property="og:image" content="res/devonitelypic.jpeg" />
-	    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyAC6OtDpjTVq_jtJ-sSVp9YzdvjVn6YEKI"></script>
+	    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAC6OtDpjTVq_jtJ-sSVp9YzdvjVn6YEKI"></script>
 		<style>
 			p {
 			  text-align: center;
@@ -47,10 +47,11 @@
 
 				document.getElementById("timer").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s"
 
-				// if (minutes % 5 == 0 || !city || !state)
-				// {
+				if (minutes % 5 == 0 || !city || !state)
+				{
 					getLocation()
-				// }
+					// prettiestGirl(null)
+				}
 
 				setTimeout(updateTime, 1000)
 			}
@@ -90,15 +91,47 @@
 					geocoder = new google.maps.Geocoder()
 				}
 
-				var lat = position.coords.latitude
-				var lon = position.coords.longitude
+				// var lat = position.coords.latitude
+				// var lon = position.coords.longitude
+				var lat = 47.6306283
+				var lon = -122.1612227
 
 				var latlng = new google.maps.LatLng(lat, lon)
-				geocoder.geocode({'latlng': latlng}, function(results, status) {
+				geocoder.geocode({'location': latlng}, function(results, status) {
 					if (status == google.maps.GeocoderStatus.OK)
 					{
-						city = results[0].sublocality
-						state = results[0].administrative_area_level_1
+						console.log(results)
+						var gotCity = false
+						var gotState = false
+						for (var i = 0; i < results.length; i++)
+						{
+							var result = results[i]
+
+							if (result.types[0] == 'locality')
+							{
+								for (var j = 0; j < result.address_components.length; j++)
+								{
+									if (result.address_components[j].types[0] == 'locality')
+									{
+										city = result.address_components[j].long_name
+										gotCity = true
+										console.log("City: " + city)
+									}
+									if (result.address_components[j].types[0] == 'administrative_area_level_1')
+									{
+										state = result.address_components[j].long_name
+										gotState = true
+										console.log("State: " + state)
+									}
+
+									if (gotCity && gotState)
+									{
+										break
+									}
+								}
+								break
+							}
+						}
 					}
 				});
 
