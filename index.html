@@ -141,7 +141,21 @@
 							}
 						}
 
-						document.getElementById("prettiest").innerHTML = "How's it feel to be the prettiest girl in " + city + ", " + state + "?";
+						if (!city || !state)
+						{
+							if (!city && state)
+							{
+								document.getElementById("prettiest").innerHTML = "How's it feel to be the prettiest girl in the state of " + state + "?";
+							}
+							else
+							{
+								document.getElementById("prettiest").innerHTML = "How's it feel to be the prettiest girl in the world?";
+							}
+						}
+						else
+						{
+							document.getElementById("prettiest").innerHTML = "How's it feel to be the prettiest girl in " + city + ", " + state + "?";
+						}
 					}
 				});
 			}
