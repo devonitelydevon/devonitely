@@ -119,13 +119,19 @@
 							{
 								for (var j = 0; j < result.address_components.length; j++)
 								{
-									if (result.address_components[j].types[0] == 'locality')
+									if (result.address_components[j].types[0] == 'locality' && !gotCity)
 									{
 										city = result.address_components[j].long_name
 										gotCity = true
 										console.log("City: " + city)
 									}
-									if (result.address_components[j].types[0] == 'administrative_area_level_1')
+									if (result.address_components[j].types[0] == 'administrative_area_level_1' && !gotState)
+									{
+										state = result.address_components[j].long_name
+										gotState = true
+										console.log("State: " + state)
+									}
+									else if (isState(result.address_components[j].long_name) && !gotState)
 									{
 										state = result.address_components[j].long_name
 										gotState = true
@@ -158,6 +164,19 @@
 						}
 					}
 				});
+			}
+
+			function getStates()
+			{
+				return ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine",
+								"Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebrasksa", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
+								"Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming" ];
+			}
+
+			function isState(state)
+			{
+				var states = getStates()
+				return states.includes(state)
 			}
 
 		</script>
