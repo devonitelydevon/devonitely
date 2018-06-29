@@ -5,6 +5,7 @@
 		<meta charset="utf-8">
 	    <meta property="og:title" content="Countdown to Dev!" />
 	    <meta property="og:image" content="res/devonitelypic.jpeg" />
+	    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyAC6OtDpjTVq_jtJ-sSVp9YzdvjVn6YEKI"></script>
 		<style>
 			p {
 			  text-align: center;
@@ -21,8 +22,13 @@
 		<div>
 			<img src="res/devonitelybackground.JPG" alt="Dev Diggity" style="height:40%;width:40%;display:block;margin-left:auto;margin-right:auto;">
 		</div>
+		<br/>
+		<p id="prettiest"></p>
 		<script>
 			var reunionDate;
+			var geocoder;
+			var city;
+			var state;
 			updateTime();
 
 			function updateTime()
@@ -40,6 +46,11 @@
 				var seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
 
 				document.getElementById("timer").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s"
+
+				// if (minutes % 5 == 0 || !city || !state)
+				// {
+					getLocation()
+				// }
 
 				setTimeout(updateTime, 1000)
 			}
@@ -59,6 +70,41 @@
 				// 7/2/18 4:35 AM MST
 				// 7/2/18 10:35 AM UTC
 			}
+
+			function getLocation()
+			{
+				if (navigator.geoLocation)
+				{
+					navigator.geoLocation.getCurrentPosition(prettiestGirl)
+				}
+				else
+				{
+					console.log("unable to get location")
+				}
+			}
+
+			function prettiestGirl(position)
+			{
+				if (!geocoder)
+				{
+					geocoder = new google.maps.Geocoder()
+				}
+
+				var lat = position.coords.latitude
+				var lon = position.coords.longitude
+
+				var latlng = new google.maps.LatLng(lat, lon)
+				geocoder.geocode({'latlng': latlng}, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK)
+					{
+						city = results[0].sublocality
+						state = results[0].administrative_area_level_1
+					}
+				});
+
+				document.getElementById("prettiest").innerHTML = "How's it feel to be the prettiest girl in " + city + ", " + state + "?";
+			}
+
 		</script>
 
 	</body>
