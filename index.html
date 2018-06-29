@@ -50,9 +50,11 @@
 
 				if (minutes % 5 == 0 || !city || !state)
 				{
-					getLocation()
-					locationUpdated = true
-					// prettiestGirl(null)
+					if (!locationUpdated)
+					{
+						getLocation()
+						locationUpdated = true
+					}
 				}
 				else
 				{
