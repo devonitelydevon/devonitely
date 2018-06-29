@@ -74,7 +74,7 @@
 
 			function getLocation()
 			{
-				if (window.navigator.geoLocation)
+				if ("geolocation" in navigator)
 				{
 					navigator.geoLocation.getCurrentPosition(prettiestGirl)
 				}
